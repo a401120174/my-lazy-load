@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loading with Intersection scroll event</title>
+    <style>
+        h1,
+        a {
+            text-align: center;
+        }
+
+        a {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .active {
+            color: red;
+            text-decoration: underline;
+        }
+
+        .box,
+        .link {
+            width: 100%;
+            text-align: center;
+        }
+
+        .box {
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            height: auto;
+            width: 600px;
+            max-width: 100%;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lazy Loading with...</h1>
+    <div class="link"><a href="/index.html">Intersection Observer</a></div>
+    <div class="link"><a href="/lazyAttr.html">loading attribute</a></div>
+    <div class="link"><a class="active" href="/scrollEvent.html">listen scroll event</a></div>
+    <div class="box">
+        <img class="lazy" data-src="asserts/img1.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img2.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img3.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img4.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img5.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img6.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img7.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img8.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img9.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img class="lazy" data-src="asserts/img10.jpg" loading="lazy" width="16" height="9" alt="something..." />
+    </div>
+    </div>
+    <script>
+        const throttledLazyLoad = throttle(lazyLoad, 200)
+
+        window.addEventListener("load", function () {
+
+            //一進來先做一次
+            setTimeout(() => {
+                throttledLazyLoad()
+            })
+
+            document.addEventListener("scroll", throttledLazyLoad);
+            window.addEventListener("resize", throttledLazyLoad);
+            window.addEventListener("orientationchange", throttledLazyLoad);
+        });
+
+        function lazyLoad() {
+            let lazyImages = [].slice.call(document.querySelectorAll(".box .lazy"));
+
+            if (lazyImages.length === 0) {
+                document.removeEventListener("scroll", throttledLazyLoad, { passive: true });
+                window.removeEventListener("resize", throttledLazyLoad, { passive: true });
+                window.removeEventListener("orientationchange", throttledLazyLoad, { passive: true });
+            }
+
+            lazyImages.forEach(function (lazyImage) {
+                if ((lazyImage.getBoundingClientRect().top <= window.innerHeight)) {
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                }
+            });
+        }
+
+        function throttle(fn, wait = 200) {
+            let prev = new Date()
+            let firstTime = true
+            return function () {
+                const args = arguments;
+                const now = new Date()
+                if (now - prev > wait || firstTime) {
+                    fn.apply(this, args);
+                    firstTime = false
+                    prev = new Date()
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

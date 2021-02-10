@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loading with loading attribute</title>
+    <style>
+        h1,
+        a {
+            text-align: center;
+        }
+
+        a {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .active {
+            color: red;
+            text-decoration: underline;
+        }
+
+        .box,
+        .link {
+            width: 100%;
+            text-align: center;
+        }
+
+        .box {
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            height: auto;
+            width: 600px;
+            max-width: 100%;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lazy Loading with...</h1>
+    <div class="link"><a href="/index.html">Intersection Observer</a></div>
+    <div class="link"><a class="active" href="/lazyAttr.html">loading attribute</a></div>
+    <div class="link"><a href="/scrollEvent.html">listen scroll event</a></div>
+    <div class="box">
+        <img src="asserts/img1.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img2.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img3.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img4.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img5.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img6.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img7.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img8.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img9.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+        <img src="asserts/img10.jpg" loading="lazy" width="16" height="9" alt="something..." loading="lazy" />
+    </div>
+    </div>
+</body>
+
+</html>

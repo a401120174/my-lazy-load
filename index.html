@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loading with Intersection Observer</title>
+    <style>
+        h1,
+        a {
+            text-align: center;
+        }
+
+        a {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .active {
+            color: red;
+            text-decoration: underline;
+        }
+
+        .box,
+        .link {
+            width: 100%;
+            text-align: center;
+        }
+
+        .box {
+            margin-top: 10px;
+        }
+
+        img {
+            display: block;
+            height: auto;
+            width: 600px;
+            max-width: 100%;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lazy Loading with...</h1>
+    <div class="link"><a class="active" href="/index.html">Intersection Observer</a></div>
+    <div class="link"><a href="/lazyAttr.html">loading attribute</a></div>
+    <div class="link"><a href="/scrollEvent.html">listen scroll event</a></div>
+    <div class="box"> <img data-src="asserts/img1.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img2.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img3.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img4.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img5.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img6.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img7.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img8.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img9.jpg" loading="lazy" width="16" height="9" alt="something..." />
+        <img data-src="asserts/img10.jpg" loading="lazy" width="16" height="9" alt="something..." />
+    </div>
+    </div>
+    <script>
+        const images = document.querySelectorAll('.box img')
+        const observer = new IntersectionObserver((entries) => {
+            for (let entry of entries) {
+                if (entry.isIntersecting) {
+                    // 監視目標進入畫面
+                    const img = entry.target
+                    img.setAttribute('src', img.dataset.src) // 把值塞回 src
+                    img.removeAttribute('data-src')
+                    observer.unobserve(img) // 取消監視
+                }
+            }
+        })
+
+        images.forEach(img => {
+            observer.observe(img)
+        })
+    </script>
+</body>
+
+</html>
